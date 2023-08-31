@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PH Tube</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="max-w-screen-xl mx-auto">
+    <header>
+      <nav
+        class="flex items-center justify-between my-5 py-8 border-b-gray-200 border-b-2"
+      >
+        <img src="images/Logo.png" alt="" />
+        <button class="bg-gray-300 px-5 py-3 rounded-lg text-xl font-semibold">
+          Sort by view
+        </button>
+        <button
+          id="blog"
+          onclick="clickBlog()"
+          class="bg-[#FF1F3D] px-5 py-3 rounded-lg text-xl text-white font-semibold"
+        >
+          Blog
+        </button>
+      </nav>
+    </header>
+    <main>
+      <!-- Category Type -->
+      <section>
+        <div id="category-container" class="flex justify-center gap-5 my-8"></div>
+      </section>
+      <!-- Categories -->
+      <section>
+       <div id="video-cards" class="grid grid-cols-4 gap-4">
+         <div>
+          <img src="" alt="">
+          <div></div>
+         </div>
+       </div>
+      </section>
+    </main>
+    <script src="js/index.js"></script>
+  </body>
+</html>
