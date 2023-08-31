@@ -1,7 +1,4 @@
-function clickBlog() {
-  window.location.href = "blog.html";
-}
-
+let views = [];
 const loadCategory = async () => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/videos/categories`
@@ -30,20 +27,52 @@ const displayVideos = async (categoryId) => {
   console.log(data);
   const allCard = data.data;
   console.log(allCard);
-  
   const videoCards = document.getElementById("video-cards");
+  const drawingImage = document.getElementById("drawing-image");
+  allCard.length === 0
+    ? drawingImage.classList.remove("hidden")
+    : drawingImage.classList.add("hidden");
   videoCards.innerHTML = "";
-
   allCard.forEach((eachCard) => {
-   
+    // converting seconds into hrs and mins
+    const postedDate = parseInt(eachCard.others?.posted_date);
+    const hours = Math.floor(postedDate / 3600);
+    const minutes = Math.floor(hours / 60);
     const videoCard = document.createElement("div");
+    videoCard.classList = "p-5 rounded-lg shadow-lg border-2";
     videoCard.innerHTML = `
-    <img src="${eachCard.thumbnail
-    }">
+    <div class="relative"><img class="w-full h-48 rounded-lg " src="${
+      eachCard.thumbnail
+    }"><div id="publish-time" class="absolute bottom-2 right-2 bg-black/50 text-gray-200 p-2 rounded-lg">${hours}hrs ${minutes}min ago</div></div>
+    <h2 class="text-2xl font-semibold my-5">${eachCard.title}</h2>
+    <div class="flex gap-4 items-center">
+      <img class="w-16 h-16 rounded-full" src="${
+        eachCard.authors[0].profile_picture
+      }">
+     <div>
+     <div class="flex gap-2">
+     <p class="text-lg text-gray-500 ">${eachCard.authors[0].profile_name} </p> 
+     <img class="" src="${
+       eachCard.authors[0].verified ? "images/verify.png" : ""
+     }">
+     </div>
+     <p> ${eachCard.others.views} views</p>
+     </div>
+    </div>
     `;
-    videoCards.appendChild(videoCard)
+
+    videoCards.appendChild(videoCard);
+    views.push(eachCard.others.views);
   });
 };
-displayVideos();
 
+const handleClickSortByView = () => {
+  const sortedViews = [...views];
+  const sortedViewsNumber = sortedViews.map((n) => n.replace("K", ""));
+  sortedViewsNumber.sort((a, b) => {
+    return b - a;
+  });
+  displayVideos(sortedViewsNumber);
+};
+displayVideos("1000");
 loadCategory();
