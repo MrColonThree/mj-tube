@@ -1,78 +1,114 @@
-let views = [];
+// Default view
+let isSorted = false;
+let isDescending = false;
+// Default category
+let categoryId = "1000";
+// declare global variable
+let allCardsData = [];
+
+// Load categories from API using fetch
 const loadCategory = async () => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/videos/categories`
   );
   const data = await response.json();
-  // console.log(data);
   const categories = data.data;
-  // console.log(categories);
-
+  // to get each Category
   categories.forEach((category) => {
-    // console.log(category.category)
     const categoryContainer = document.getElementById("category-container");
     const categoryDiv = document.createElement("div");
     categoryDiv.innerHTML = `
-    <button onclick="displayVideos('${category.category_id}')" class="bg-gray-300 px-5 py-3 rounded-lg text-lg font-medium hover:bg-[#FF1F3D] hover:text-white">${category.category}</button>
+      <button id="${category.category_id}" onclick="selectedCategory('${category.category_id}')" class="all-buttons bg-gray-300 px-5 py-3 rounded-lg text-lg font-medium hover:bg-[#FF1F3D] hover:text-white">${category.category}</button>
     `;
     categoryContainer.appendChild(categoryDiv);
   });
 };
 
-const displayVideos = async (categoryId) => {
+// after clicking the other category , to get default views.
+const selectedCategory = (activeCategoryId) => {
+  // to get all category buttons
+  const allButtons = document.getElementsByClassName("all-buttons");
+  for (const button of allButtons) {
+    button.style.backgroundColor = "";
+    button.style.color = "";
+  }
+  // set background color red and text color white to active button
+  const activeButton = document.getElementById(activeCategoryId);
+  activeButton.style.backgroundColor = "#FF1F3D";
+  activeButton.style.color = "white";
+
+  isSorted = false;
+  isDescending = false;
+  categoryId = activeCategoryId;
+  displayAllCards();
+};
+// Load  all videos by categories from API
+const displayAllCards = async () => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
   const data = await response.json();
-  console.log(data);
-  const allCard = data.data;
-  console.log(allCard);
+  allCardsData = data.data;
   const videoCards = document.getElementById("video-cards");
+  videoCards.innerHTML = "";
   const drawingImage = document.getElementById("drawing-image");
-  allCard.length === 0
+  // calculate views from each card to sort it which is depending on allcardsData length
+  if (isSorted && allCardsData.length > 0) {
+    allCardsData.sort((first, second) => {
+      const small = parseInt(first.others.views.replace("K", "")) * 1000;
+      const large = parseInt(second.others.views.replace("K", "")) * 1000;
+      return isDescending ? large - small : small - large;
+    });
+  }
+  // Condition for empty category
+  allCardsData.length === 0
     ? drawingImage.classList.remove("hidden")
     : drawingImage.classList.add("hidden");
-  videoCards.innerHTML = "";
-  allCard.forEach((eachCard) => {
-    // converting seconds into hrs and mins
+  // To get each video card from a specific category
+  allCardsData.forEach((eachCard) => {
+    // Converting seconds to hrs and min
     const postedDate = parseInt(eachCard.others?.posted_date);
     const hours = Math.floor(postedDate / 3600);
-    const minutes = Math.floor(hours / 60);
+    const minutes = Math.floor((postedDate % 3600) / 60);
+    // Create a div to append here each video card data
     const videoCard = document.createElement("div");
-    videoCard.classList = "p-5 rounded-lg shadow-lg border-2";
+    videoCard.classList = "rounded-lg shadow-lg border-2";
     videoCard.innerHTML = `
-    <div class="relative"><img class="w-full h-48 rounded-lg " src="${
-      eachCard.thumbnail
-    }"><div id="publish-time" class="absolute bottom-2 right-2 bg-black/50 text-gray-200 p-2 rounded-lg">${hours}hrs ${minutes}min ago</div></div>
-    <h2 class="text-2xl font-semibold my-5">${eachCard.title}</h2>
-    <div class="flex gap-4 items-center">
-      <img class="w-16 h-16 rounded-full" src="${
-        eachCard.authors[0].profile_picture
-      }">
-     <div>
-     <div class="flex gap-2">
-     <p class="text-lg text-gray-500 ">${eachCard.authors[0].profile_name} </p> 
-     <img class="" src="${
-       eachCard.authors[0].verified ? "images/verify.png" : ""
-     }">
-     </div>
-     <p> ${eachCard.others.views} views</p>
-     </div>
-    </div>
-    `;
-
+        <div class="relative"><img class="w-full h-48 rounded-t-lg " src="${
+          eachCard.thumbnail
+        }">${
+      eachCard.others.posted_date
+        ? `<div id="publish-time" class="absolute bottom-2 right-2 bg-black/70 text-gray-200 p-2 rounded-lg">${hours}hrs ${minutes}min ago</div>`
+        : ""
+    }</div>
+        <div class="flex gap-4 p-5">
+          <img class="w-12 h-12 rounded-full mt-2" src="${
+            eachCard.authors[0].profile_picture
+          }">
+          <div>
+          <h2 class="text-2xl font-semibold ">${eachCard.title}</h2>
+            <div class="flex gap-2">
+              <p class="text-lg text-gray-500 ">${
+                eachCard.authors[0].profile_name
+              } </p> 
+              <img class="" src="${
+                eachCard.authors[0].verified ? "images/verify.png" : ""
+              }">
+            </div>
+            <p>${eachCard.others.views} views</p>
+          </div>
+        </div>
+      `;
     videoCards.appendChild(videoCard);
-    views.push(eachCard.others.views);
   });
+};
+// when click the sort by view button
+const handleClickSortByView = () => {
+  isSorted = true;
+  // When click sort by view button second time then videos will sorted ascending format.
+  isDescending = !isDescending;
+  displayAllCards();
 };
 
-const handleClickSortByView = () => {
-  const sortedViews = [...views];
-  const sortedViewsNumber = sortedViews.map((n) => n.replace("K", ""));
-  sortedViewsNumber.sort((a, b) => {
-    return b - a;
-  });
-  displayVideos(sortedViewsNumber);
-};
-displayVideos("1000");
 loadCategory();
+displayAllCards();

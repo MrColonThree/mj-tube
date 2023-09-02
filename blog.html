@@ -1,14 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h2>Answers</h2>
-  <div>
-
-  </div>
-</body>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.6.4/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="max-w-screen-lg mx-auto">
+    <header class="text-center">
+      <button class="text-3xl my-6 bg-[#FF1F3D] text-white px-5 py-3 rounded-lg" disabled>Blog</button>
+    </header>
+    <section class="px-5">
+      <!-- Question-1 -->
+      <div
+        tabindex="0"
+        class="collapse collapse-plus border border-base-300 bg-base-200"
+      >
+        <div class="collapse-title text-2xl font-medium">
+          Discuss the scope of <span class="text-blue-600 underline font-semibold">var</span>, <span class="text-red-600 underline font-semibold">let</span>, and <span class="text-purple-600 underline font-semibold">const </span
+            >
+        </div>
+        <div class="collapse-content text-xl">
+          <h4>
+            Basically there
+            are three kinds of scopes. Global, Local & Block Scope .Here
+            <span class="text-blue-600 underline font-semibold">var</span> can
+            have a global or local scope. When it declared outside function it
+            is global scope, weather it declared inside function it is a local
+            scope.Here
+            <span class="text-red-600 underline font-semibold">let</span> can
+            have a global or local or block scope. When it declared in a block
+            then it can be block scope.We can't access these variables outside
+            the block. Another variables declared by
+            <span class="text-purple-600 underline font-semibold">const </span
+            >are similar to
+            <span class="text-red-600 underline font-semibold">let</span>
+            variables.Such variables can have global, block or local scope.
+          </h4>
+        </div>
+      </div>
+      <!-- Question-2 -->
+      <div
+        tabindex="0"
+        class="collapse collapse-plus border border-base-300 bg-base-200"
+      >
+        <div class="collapse-title text-2xl font-medium">
+          Tell us the use cases of <span class="text-red-500">null</span> and <span class="text-orange-500">undefined</span>
+        </div>
+        <div class="collapse-content text-xl">
+          <h4>
+            <span class="text-red-500">null</span> & <span class="text-blue-500">undefined</span> both values are represent the absence of a value.But their use aren't same. We use these values in different conditions.So, if I assign the value </span><span class="text-red-500">null</span> in a variable that means the variable has no value. We use <span class="text-red-500">null</span> when we don't have any value of a variable or a object.
+            And if we declared a variable but didn't assign any value than we get it's value as <span class="text-blue-500">undefined</span>. Also if we don't pass any parameter to a function and return nothing then after calling the function we get <span class="text-blue-500">undefined</span>. Basically it is a default value where any variable or object is not initialized. 
+          </h4>
+        </div>
+      </div>
+      <!-- Question-3 -->
+      <div
+        tabindex="0"
+        class="collapse collapse-plus border border-base-300 bg-base-200"
+      >
+        <div class="collapse-title text-2xl font-medium">
+          What do you mean by REST API?
+        </div>
+        <div class="collapse-content text-xl">
+          REST API means Representational State Transfer API ,referred to as RESTful API.It is a set of architectural constraints and principles used for designing networked applications. It’s sometimes referred to as a contract between an information provider and an information user—establishing the content required from the consumer and the content required by the producer. For example, the API design for a bus service could specify that the user supply a time or information and that the producer reply with specific answer, as which buses are available, ticket price and travel time etc.  
+        </div>
+      </div>
+    </section>
+    <div class="text-xl"></div>
+  </body>
 </html>
