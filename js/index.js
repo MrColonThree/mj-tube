@@ -80,21 +80,21 @@ const displayAllCards = async () => {
         ? `<div id="publish-time" class="absolute text-sm bottom-2 right-2 bg-black/70 text-gray-200 p-2 rounded-lg">${hours}hrs ${minutes}min ago</div>`
         : ""
     }</div>
-        <div class="flex gap-4 mt-2 ">
-          <img class="w-14 h-14 rounded-full mt-2" src="${
+        <div class="flex gap-4 mt-4 ">
+          <img class="w-12 h-12 rounded-full mt-2" src="${
             eachCard.authors[0].profile_picture
           }">
           <div>
           <h2 class="text-xl font-semibold ">${eachCard.title}</h2>
-            <div class="flex gap-2">
-              <p class="text-lg text-gray-500 ">${
+            <div class="flex gap-2 my-1">
+              <p class="text-lg text-gray-500">${
                 eachCard.authors[0].profile_name
               } </p> 
               <img class="w-7" src="${
                 eachCard.authors[0].verified ? "images/verify.png" : ""
               }">
             </div>
-            <p>${eachCard.others.views} views</p>
+            <p class="text-gray-500">${eachCard.others.views} views</p>
           </div>
         </div>
       `;
