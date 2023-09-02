@@ -13,6 +13,7 @@ const loadCategory = async () => {
   );
   const data = await response.json();
   const categories = data.data;
+  
   // to get each Category
   categories.forEach((category) => {
     const categoryContainer = document.getElementById("category-container");
@@ -21,9 +22,12 @@ const loadCategory = async () => {
       <button id="${category.category_id}" onclick="selectedCategory('${category.category_id}')" class="all-buttons bg-gray-300 px-5 py-3 rounded-lg text-lg font-medium hover:bg-[#FF1F3D] hover:text-white">${category.category}</button>
     `;
     categoryContainer.appendChild(categoryDiv);
+    // set background color and text color of default category button
+    const defaultCategory = document.getElementById(categoryId);
+    defaultCategory.style.backgroundColor = "#FF1F3D";
+    defaultCategory.style.color = "white";
   });
 };
-
 // after clicking the other category , to get default views.
 const selectedCategory = (activeCategoryId) => {
   // to get all category buttons
@@ -41,6 +45,7 @@ const selectedCategory = (activeCategoryId) => {
   categoryId = activeCategoryId;
   displayAllCards();
 };
+
 // Load  all videos by categories from API
 const displayAllCards = async () => {
   const response = await fetch(
