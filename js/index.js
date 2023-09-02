@@ -86,7 +86,7 @@ const displayAllCards = async () => {
             eachCard.authors[0].profile_picture
           }">
           <div>
-          <h2 class="text-2xl font-semibold ">${eachCard.title}</h2>
+          <h2 class="text-xl font-semibold ">${eachCard.title}</h2>
             <div class="flex gap-2">
               <p class="text-lg text-gray-500 ">${
                 eachCard.authors[0].profile_name
