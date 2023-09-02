@@ -71,9 +71,9 @@ const displayAllCards = async () => {
     const minutes = Math.floor((postedDate % 3600) / 60);
     // Create a div to append here each video card data
     const videoCard = document.createElement("div");
-    videoCard.classList = "rounded-lg";
+    videoCard.classList = "rounded-lg my-2";
     videoCard.innerHTML = `
-        <div class="relative"><img class="w-full h-48 rounded-lg " src="${
+        <div class="relative"><img class="w-full h-52 rounded-lg " src="${
           eachCard.thumbnail
         }">${
       eachCard.others.posted_date
@@ -81,7 +81,7 @@ const displayAllCards = async () => {
         : ""
     }</div>
         <div class="flex gap-4 mt-2 ">
-          <img class="w-12 h-12 rounded-full mt-2" src="${
+          <img class="w-14 h-14 rounded-full mt-2" src="${
             eachCard.authors[0].profile_picture
           }">
           <div>
