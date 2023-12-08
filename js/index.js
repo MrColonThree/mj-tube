@@ -13,18 +13,18 @@ const loadCategory = async () => {
   );
   const data = await response.json();
   const categories = data.data;
-  
+
   // to get each Category
   categories.forEach((category) => {
     const categoryContainer = document.getElementById("category-container");
     const categoryDiv = document.createElement("div");
     categoryDiv.innerHTML = `
-      <button id="${category.category_id}" onclick="selectedCategory('${category.category_id}')" class="all-buttons bg-gray-300 px-5 py-3 rounded-lg text-lg font-medium hover:bg-[#FF1F3D] hover:text-white">${category.category}</button>
+      <button id="${category.category_id}" onclick="selectedCategory('${category.category_id}')" class="all-buttons bg-gray-300 px-5 py-3 rounded-lg text-lg font-medium hover:bg-[#20a7db] hover:text-white">${category.category}</button>
     `;
     categoryContainer.appendChild(categoryDiv);
     // set background color and text color of default category button
     const defaultCategory = document.getElementById(categoryId);
-    defaultCategory.style.backgroundColor = "#FF1F3D";
+    defaultCategory.style.backgroundColor = "#20a7db";
     defaultCategory.style.color = "white";
   });
 };
@@ -38,7 +38,7 @@ const selectedCategory = (activeCategoryId) => {
   }
   // set background color red and text color white to active button
   const activeButton = document.getElementById(activeCategoryId);
-  activeButton.style.backgroundColor = "#FF1F3D";
+  activeButton.style.backgroundColor = "#20a7db";
   activeButton.style.color = "white";
   isSorted = false;
   isDescending = false;
@@ -56,7 +56,7 @@ const displayAllCards = async () => {
   const videoCards = document.getElementById("video-cards");
   videoCards.innerHTML = "";
   const drawingImage = document.getElementById("drawing-image");
-  // calculate views from each card to sort it which is depending on allcardsData length
+  // calculate views from each card to sort it which is depending on allCardsData length
   if (isSorted && allCardsData.length > 0) {
     allCardsData.sort((first, second) => {
       const small = parseInt(first.others.views.replace("K", "")) * 1000;
